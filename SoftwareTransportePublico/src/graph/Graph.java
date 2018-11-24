@@ -41,7 +41,6 @@ public class Graph<T> {
 	public void addVertex(T n) {
 		vertex.add(n);
 		indexes.put(n, vertex.size()-1);
-		System.out.println(indexes.get(n));
 		adjacent.add(new HashMap<T,Integer>());
 	}
 
@@ -86,7 +85,7 @@ public class Graph<T> {
 	 * @param key - the object wich index is asked for.
 	 * @return - Integer that specifies the index of the object.
 	 */
-	private Integer indexOf(T key) {
+	public Integer indexOf(T key) {
 		return indexes.get(key);
 	}
 
@@ -97,6 +96,20 @@ public class Graph<T> {
 	public void removeNode(T d) {
 		vertex.remove(d);
 		indexes.remove(d);
+	}
+
+	/**
+	 * @return the vertex
+	 */
+	public List<T> getVertex() {
+		return vertex;
+	}
+
+	/**
+	 * @param vertex the vertex to set
+	 */
+	public void setVertex(List<T> vertex) {
+		this.vertex = vertex;
 	}
 
 	/**
