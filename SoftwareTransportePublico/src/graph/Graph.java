@@ -38,9 +38,9 @@ public class Graph<T> {
 	 * Adds vertex to the graph.
 	 * @param n - The vertex to add.
 	 */
-	public void addVertex(T n) {
+	public void addVertex(T n, Integer index) {
 		vertex.add(n);
-		indexes.put(n, vertex.size()-1);
+		indexes.put(n, index);
 		adjacent.add(new HashMap<T,Integer>());
 	}
 
@@ -186,7 +186,7 @@ public class Graph<T> {
 			}
 		}
 
-		return dist;
+		return prev;
 	}
 
 	/**

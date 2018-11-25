@@ -48,7 +48,7 @@ public class Graph_matrix<T> {
 			int index = indexOf(n1);
 			int index2 = indexOf(n2);
 			adjMatrix[index][index2] = w;
-			adjMatrix[index2][index] = w;
+//			adjMatrix[index2][index] = w;
 		}
 	}
 
@@ -92,7 +92,7 @@ public class Graph_matrix<T> {
 		int index = indexOf(d);
 		for(int i = 0; i < adjMatrix.length;i++) {
 			adjMatrix[index][i] = 0;
-			adjMatrix[i][index] = 0;
+//			adjMatrix[i][index] = 0;
 		}
 		vertex.remove(d);
 	}
@@ -181,7 +181,7 @@ public class Graph_matrix<T> {
 				}
 			}
 		}
-		return dist;
+		return prev;
 	}
 
 	/**

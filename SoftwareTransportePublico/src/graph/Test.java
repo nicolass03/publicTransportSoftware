@@ -14,15 +14,15 @@ public class Test {
 		Integer n8 = 2;
 		Integer n9 = 3;
 		
-		g.addVertex(n9);
-		g.addVertex(n8);
-		g.addVertex(n7);
-		g.addVertex(n6);
-		g.addVertex(n5);
-		g.addVertex(n4);
-		g.addVertex(n3);
-		g.addVertex(n2);
-		g.addVertex(n1);
+		g.addVertex(n9,0);
+		g.addVertex(n8,1);
+		g.addVertex(n7,2);
+		g.addVertex(n6,3);
+		g.addVertex(n5,3);
+		g.addVertex(n4,5);
+		g.addVertex(n3,6);
+		g.addVertex(n2,7);
+		g.addVertex(n1,8);
 		
 		g.addEdge(n1, n7, 8);
 		g.addEdge(n1, n5, 7);

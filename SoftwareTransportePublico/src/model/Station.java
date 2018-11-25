@@ -1,16 +1,15 @@
 package model;
 
-import java.util.ArrayList;
-
 public class Station {
 
 	private String name;
 	private String adress;
-	private ArrayList<String> buses;
+	private String[] buses;
 
-	public Station(String n, String a) {
+	public Station(String n, String a, String[] b) {
 		name = n;
 		adress = a;
+		buses = b;
 	}
 	
 	/**
@@ -52,7 +51,7 @@ public class Station {
 	/**
 	 * @return the buses
 	 */
-	public ArrayList<String> getBuses() {
+	public String[] getBuses() {
 		return buses;
 	}
 
@@ -61,7 +60,7 @@ public class Station {
 	/**
 	 * @param buses the buses to set
 	 */
-	public void setBuses(ArrayList<String> buses) {
+	public void setBuses(String[] buses) {
 		this.buses = buses;
 	}
 

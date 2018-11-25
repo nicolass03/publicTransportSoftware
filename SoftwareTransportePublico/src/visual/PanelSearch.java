@@ -16,7 +16,7 @@ import javax.swing.JPanel;
 
 public class PanelSearch extends JPanel implements ActionListener{
 
-	public static final String SEARCH = "";
+	public static final String SEARCH = "s";
 	
 	private JLabel lbl1;
 	private JLabel lbl2;

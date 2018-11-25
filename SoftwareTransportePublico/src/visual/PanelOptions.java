@@ -58,6 +58,18 @@ public class PanelOptions extends JPanel implements ActionListener{
 
 	@Override
 	public void actionPerformed(ActionEvent a) {
-		
+		String ac = a.getActionCommand();
+		if(ac.equals(CHANGE_GRAPH)) {
+			mw.initChangeGraphDialog();
+		}
+		else if(ac.equals(ADD)) {
+			mw.initAddStationDialog();
+		}
+		else if(ac.equals(DELETE)) {
+			mw.initDeleteStationDialog();
+		}
+		else if(ac.equals(NEW_SEARCH)) {
+			
+		}
 	}
 }
