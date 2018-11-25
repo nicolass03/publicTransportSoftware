@@ -4,9 +4,9 @@ public class Station {
 
 	private String name;
 	private String adress;
-	private String[] buses;
+	private String buses;
 
-	public Station(String n, String a, String[] b) {
+	public Station(String n, String a, String b) {
 		name = n;
 		adress = a;
 		buses = b;
@@ -51,7 +51,7 @@ public class Station {
 	/**
 	 * @return the buses
 	 */
-	public String[] getBuses() {
+	public String getBuses() {
 		return buses;
 	}
 
@@ -60,7 +60,7 @@ public class Station {
 	/**
 	 * @param buses the buses to set
 	 */
-	public void setBuses(String[] buses) {
+	public void setBuses(String buses) {
 		this.buses = buses;
 	}
 

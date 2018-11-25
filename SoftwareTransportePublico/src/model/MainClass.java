@@ -32,10 +32,10 @@ public class MainClass {
 			int vertex = Integer.parseInt(br.readLine());
 			stations_matrix = new Graph_matrix<Station>(vertex);
 			while(vertex-->0){
-				String[] datos = br.readLine().split(" ");
+				String[] datos = br.readLine().split("_");
 				Integer index = Integer.parseInt(datos[0]);
-				stations.addVertex(new Station(datos[1], datos[2], datos[3].split(",")), index);
-				stations_matrix.addVertex(new Station(datos[1], datos[2], datos[3].split(",")));
+				stations.addVertex(new Station(datos[1], datos[2], datos[3]), index);
+				stations_matrix.addVertex(new Station(datos[1], datos[2], datos[3]));
 				
 			}
 			while(br.readLine() != null){
@@ -110,8 +110,8 @@ public class MainClass {
 	}
 	
 	public void addStation(String[] d) {
-		stations.addVertex(new Station(d[0],d[1],d[2].split(",")), getStations_List().size());
-		stations.addVertex(new Station(d[0],d[1],d[2].split(",")), getStations_Matrix().size());
+		stations.addVertex(new Station(d[0],d[1],d[2]), getStations_List().size());
+		stations.addVertex(new Station(d[0],d[1],d[2]), getStations_Matrix().size());
 	}
 	
 	public void deleteStation(Station s) {

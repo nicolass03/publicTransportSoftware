@@ -123,6 +123,8 @@ public class MainWindow extends JFrame{
 		for(int i = 0; i < path.length;i++) {
 			String[] d = {path[i].getName(),path[i].getAdress()};
 			pResult.addMiniPanelResult(d);
+			pResult.validate();
+			pResult.repaint();
 		}
 	}
 	
