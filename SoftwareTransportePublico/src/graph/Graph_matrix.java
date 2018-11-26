@@ -181,7 +181,7 @@ public class Graph_matrix<T> {
 						if(dist[index] + weight < dist[i]) {
 							dist[i] = dist[index] + weight;
 							prev[i] = index;
-							q.add(new Pair(i,weight));
+							q.add(new Pair(vertex.get(i),weight));
 						}
 					}
 				}
@@ -245,12 +245,13 @@ public class Graph_matrix<T> {
 				if(adjMatrix[index][i] != 0) {
 					if(!visited[i]) {
 						q.add(vertex.get(i));
-						b.add(vertex.get(index));
+						b.add(vertex.get(i));
 						visited[i] = true;
 					}					
 				}
 			}
 		}
+		System.out.println(b);
 		return b;
 	}
 

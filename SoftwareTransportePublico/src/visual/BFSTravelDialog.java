@@ -15,14 +15,14 @@ public class BFSTravelDialog extends JDialog{
 
 	public BFSTravelDialog(List<Station> d) {
 		setLayout(new FlowLayout());
-		setPreferredSize(new Dimension(180,600));
+		setPreferredSize(new Dimension(350,600));
 		JScrollPane js = new JScrollPane();
 		js.setPreferredSize(new Dimension(160,600));
-		add(js);
+//		add(js);
 		for(int i = 0; i < d.size(); i++) {
 			JLabel lbl = new JLabel(d.get(i).getName());
-			lbl.setPreferredSize(new Dimension(200,60));
-			js.add(lbl);
+			lbl.setPreferredSize(new Dimension(160,15));
+			add(lbl);
 		}
 		revalidate();
 		validate();

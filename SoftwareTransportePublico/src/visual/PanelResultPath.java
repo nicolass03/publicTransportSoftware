@@ -20,6 +20,7 @@ public class PanelResultPath extends JPanel{
 	public void addMiniPanelResult(String[] d) {
 		JPanel aux = new JPanel(new GridLayout(2,1));
 		aux.setPreferredSize(new Dimension(240,50));
+		aux.setBackground(Color.WHITE);
 		JLabel l1 = new JLabel(d[0]);
 		JLabel l2 = new JLabel(d[1]);
 		aux.add(l1);
