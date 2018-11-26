@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Toolkit;
+import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
 import javax.swing.JDialog;
@@ -25,8 +26,8 @@ public class MainWindow extends JFrame{
 	private PanelSearch pSearch;
 	private PanelOptions pOptions;
 	
-	private AddStationDialog as;
-	private DeleteStationDialog ds;
+//	private AddStationDialog as;
+	private BFSTravelDialog bfs;
 	private static LoadingScreen ls;
 	private ChangeGraphDialog cg;
 	
@@ -92,23 +93,30 @@ public class MainWindow extends JFrame{
 		cg.setVisible(true);
 	}
 	
-	public void initDeleteStationDialog() {
+	public void initBFSDialog(Object object) {
+		ArrayList<Station> s = main.bfs((Station) object);
+		bfs = new BFSTravelDialog(s);
+		bfs.setVisible(true);
+	}
+	
+	public void initSelectBFSDialog() {
+		SelectSourceDialog s = null; 
 		switch(main.getGraphType()) {
 		case 0:
-			ds = new DeleteStationDialog(main.getStations_List(), this);
+			s = new SelectSourceDialog(main.getStations_List(), this);
 			break;
 			
 		case 1:
-			ds = new DeleteStationDialog(main.getStations_Matrix(), this);
+			s = new SelectSourceDialog(main.getStations_Matrix(), this);
 			break;
 		}
-		ds.setVisible(true);
+		s.setVisible(true);
 	}
 	
-	public void initAddStationDialog() {
-		as = new AddStationDialog(this);
-		as.setVisible(true);
-	}
+//	public void initAddStationDialog() {
+//		as = new AddStationDialog(this);
+//		as.setVisible(true);
+//	}
 	
 	/////////////////////////////////////////////////////////////
 	
@@ -120,36 +128,56 @@ public class MainWindow extends JFrame{
 	}
 	
 	public void putResults(Station[] path) {
-		for(int i = 0; i < path.length;i++) {
-			String[] d = {path[i].getName(),path[i].getAdress()};
-			pResult.addMiniPanelResult(d);
-			pResult.validate();
-			pResult.repaint();
+		for(int i = path.length-1; i >= 0;i--) {
+			if(path[i] != null) {
+				String[] d = {path[i].getName(),path[i].getAdress()};
+				pResult.addMiniPanelResult(d);
+				pResult.revalidate();
+				pResult.repaint();				
+			}
 		}
 	}
-	
-	public void deleteStation(Object d) {
-		Station s = (Station) d;
-		main.deleteStation(s);
-		pSearch.validate();
-	}
-	
-	public void addStation(String[] d) {
-		main.addStation(d);
-		pSearch.validate();
-	}
+//	
+//	public void addStation(String[] d) {
+//		main.addStation(d);
+//		pSearch.revalidate();
+//	}
 	
 	public void changeTypeOfGraph(Object object) {
 		String t = (String) object;
 		switch(t) {
 		case "Matriz":
 			main.setGraphType(main.GRAPH_MATRIX);
+			reloadPanelSearch(1);
 			break;
 			
 		case "Lista":
 			main.setGraphType(main.GRAPH_LIST);
+			reloadPanelSearch(0);
 			break;
 		}
 	}
 
+	public void clearResultsPanel() {
+		pResult.removeAll();
+		pResult.validate();
+		pResult.revalidate();
+		pResult.repaint();
+	}
+	
+	public void reloadPanelSearch(int type) {
+		pSearch.removeAll();
+		switch(type) {
+		case 0:
+			pSearch.initComboBox(main.getStations_List());
+			break;
+			
+		case 1:
+			pSearch.initComboBox(main.getStations_Matrix());
+		}
+		pSearch.validate();
+		pSearch.revalidate();
+		pSearch.repaint();
+	}
 }
+

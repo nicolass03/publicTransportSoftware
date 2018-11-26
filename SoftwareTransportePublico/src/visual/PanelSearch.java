@@ -37,10 +37,6 @@ public class PanelSearch extends JPanel implements ActionListener{
 		setPreferredSize(new Dimension(250, 170));
 		setBackground(Color.WHITE);
 
-		jbSearch = new JButton("Buscar");
-		jbSearch.setActionCommand(SEARCH);
-		jbSearch.addActionListener(this);
-		jbSearch.setBackground(Color.WHITE);
 
 	}
 	
@@ -56,6 +52,11 @@ public class PanelSearch extends JPanel implements ActionListener{
 		target.setPreferredSize(new Dimension(230,25));
 		target.setBackground(Color.WHITE);
 
+		jbSearch = new JButton("Buscar");
+		jbSearch.setActionCommand(SEARCH);
+		jbSearch.addActionListener(this);
+		jbSearch.setBackground(Color.WHITE);
+		
 		add(lbl1);
 		add(origin);
 		add(lbl2);

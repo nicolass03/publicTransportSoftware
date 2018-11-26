@@ -2,10 +2,12 @@ package graph;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.PriorityQueue;
 import java.util.PropertyPermission;
+import java.util.Queue;
 import java.util.Stack;
 
 /**
@@ -53,7 +55,9 @@ public class Graph<T> {
 	public void addEdge(T n1, T n2, Integer w) {
 		if(vertex.contains(n1) && vertex.contains(n2)) {
 			T v2 = vertex.get(indexOf(n2));
+			T v1 = vertex.get(indexOf(n1));
 			adjacent.get(indexOf(n1)).put(v2, w);
+			adjacent.get(indexOf(n2)).put(v1, w);
 		}
 
 		//		if(nodes.contains(n2)) {
@@ -125,6 +129,13 @@ public class Graph<T> {
 				adjacent.get(index).remove(v2);
 			}
 		}
+		if(vertex.contains(n2)) {
+			int index = indexOf(n2);
+			if(adjacent.get(index).containsKey(n1)) {
+				T v1 = vertex.get(indexOf(n1));
+				adjacent.get(index).remove(v1);
+			}
+		}
 
 		//		if(nodes.contains(n2)) {
 		//			int index = getObjectIndex(n2);
@@ -160,17 +171,20 @@ public class Graph<T> {
 				dist[i] = Integer.MAX_VALUE;				
 			}
 		}
+		for(int i = 0; i < prev.length; i++) {
+			prev[i] = -1;
+		}
 
-		PriorityQueue<T> q = new PriorityQueue<T>();
-		q.add(source);
+//		PriorityQueue<T> q = new PriorityQueue<T>();
+		PriorityQueue<Pair<T>> qPesos = new PriorityQueue<Pair<T>>();
+		qPesos.add(new Pair<T>(source,0));
 
-
-		while(!q.isEmpty()) {
-			T actual = q.poll();
-			int index = indexOf(actual);
+		while(!qPesos.isEmpty()) {
+			Pair<T> actual = qPesos.poll();
+			int index = indexOf(actual.getObject());
 			if(!vis[index]) {
 				vis[index] = true;
-				HashMap<T,Integer> adj = getAdjacents(actual);
+				HashMap<T,Integer> adj = getAdjacents(actual.getObject());
 
 				for(T x : adj.keySet()) {
 					int weight = adj.get(x);
@@ -179,14 +193,14 @@ public class Graph<T> {
 						if(dist[index] + weight < dist[srcIndex]) {
 							dist[srcIndex] = dist[index] + weight;
 							prev[srcIndex] = index;
-							q.add(x);
+							qPesos.add(new Pair<T>(x,weight));
 						}
 					}
 				}
 			}
 		}
 
-		return dist;
+		return prev;
 	}
 
 	/**
@@ -226,12 +240,16 @@ public class Graph<T> {
 	/**
 	 * Breadth First Search algorithm from source vertex.
 	 * @param source - Source vertex.
+	 * @return 
 	 */
-	public void bfs(T source) {
-		PriorityQueue<T> q = new PriorityQueue<T>();
+	public ArrayList<T> bfs(T source) {
+		Queue<T> q = new LinkedList<T>();
+		ArrayList<T> b = new ArrayList<T>();
 		boolean[] visited = new boolean[vertex.size()];
 
 		q.add(source);
+		b.add(source);
+		
 		int srcIndex = indexOf(source);
 		visited[srcIndex] = true;
 
@@ -241,11 +259,13 @@ public class Graph<T> {
 			for(T x : adj.keySet()) {
 				if(!visited[indexOf(x)]) {
 					q.add(x);
+					b.add(x);
 					System.out.println(x);
 					visited[indexOf(x)] = true;
 				}
 			}
 		}
+		return b;
 	}
 
 	/**
@@ -272,9 +292,10 @@ public class Graph<T> {
 	}
 
 	public Graph<T> kruskal(T source) {
-		
+
 		return null;
 	}
+	
 	private int[] init() {
 		int[] parents = new int[vertex.size()];
 		for(int i = 0; i < parents.length; i++) {
@@ -282,7 +303,7 @@ public class Graph<T> {
 		}
 		return parents;
 	}
-	
+
 	private int root(int x, int[] id) {
 		while(id[x] != x) {
 			id[x] = id[id[x]];
@@ -290,12 +311,12 @@ public class Graph<T> {
 		}
 		return x;
 	}
-	
-//	private void union(int x, int y) {
-//		int p = root(x);
-//		int q = root
-//	}
-	
+
+	//	private void union(int x, int y) {
+	//		int p = root(x);
+	//		int q = root
+	//	}
+
 	public List<ArrayList> getEdges(){
 		List<ArrayList> edges = new ArrayList<ArrayList>();
 		for(int i = 0; i < vertex.size(); i++) {
@@ -311,7 +332,7 @@ public class Graph<T> {
 		}
 		return edges;
 	}
-	
+
 	public long prim(T source) {
 		PriorityQueue<Integer[]> q = new PriorityQueue<>();
 		T y;
@@ -323,12 +344,12 @@ public class Graph<T> {
 		while(!q.isEmpty()) {
 			curr = q.poll();
 			Integer index = curr[0];
-			
+
 			if(vis[index] == true) continue;
-			
+
 			minimumCost += (Integer) curr[1];
 			vis[index] = true;
-			
+
 			HashMap<T,Integer> adj = getAdjacents(get(index));
 			for(T x : adj.keySet()) {
 				y = x;
@@ -338,7 +359,7 @@ public class Graph<T> {
 				}
 			}
 		}
-		
+
 		return minimumCost;
 	}
 }

@@ -72,11 +72,11 @@ public class AddStationDialog extends JDialog implements ActionListener{
 		if(a.getActionCommand().equals(ACCEPT)) {
 			String[] d = {txtName.getText(), txtAdress.getText(), txtBuses.getText()};
 			if(txtName.getText() == null || txtName.getText().equals("") || txtAdress.getText() == null || 
-					txtAdress.getText().equals("") || txtBuses.getText() != null || txtBuses.getText().equals("")) {
+					txtAdress.getText().equals("") || txtBuses.getText() == null || txtBuses.getText().equals("")) {
 				JOptionPane.showMessageDialog(this, "Error", "Error", JOptionPane.ERROR_MESSAGE);
 			}
 			else {
-				mw.addStation(d);
+//				mw.addStation(d);
 				setVisible(false);
 				this.dispose();				
 			}

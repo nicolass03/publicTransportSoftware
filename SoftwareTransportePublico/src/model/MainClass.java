@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import graph.Graph;
@@ -17,7 +18,7 @@ public class MainClass {
 
 	private Graph<Station> stations;
 	private Graph_matrix<Station> stations_matrix;
-	
+
 	private int graphType;
 
 	public MainClass() {
@@ -36,15 +37,17 @@ public class MainClass {
 				Integer index = Integer.parseInt(datos[0]);
 				stations.addVertex(new Station(datos[1], datos[2], datos[3]), index);
 				stations_matrix.addVertex(new Station(datos[1], datos[2], datos[3]));
-				
 			}
-			while(br.readLine() != null){
-				String[] datos = br.readLine().split(" ");
+
+			String linea = br.readLine();
+			while(linea != null && !linea.equals("")){
+				String[] datos = linea.split("_");
 				Station s1 = stations.get(Integer.parseInt(datos[0]));
 				Station s2 = stations.get(Integer.parseInt(datos[1]));
 				int weight = Integer.parseInt(datos[2]);
 				stations.addEdge(s1,s2,weight);
 				stations_matrix.addEdge(s1,s2,weight);
+				linea = br.readLine();
 			}	
 			br.close();
 		} 
@@ -63,36 +66,41 @@ public class MainClass {
 			int tIndex = stations.indexOf(t);
 			path = new Station[disorderedPath.length];
 			path[0] = t;
-			path[path.length-1] = o;
+//			path[path.length-1] = o;
 			for(int i = 1; i < path.length-1; i++) {
-				tIndex = disorderedPath[tIndex];
-				Station current = stations.get(tIndex);
-				path[i] = current;
+				if(disorderedPath[tIndex] != -1) {
+					tIndex = disorderedPath[tIndex];
+					Station current = stations.get(tIndex);
+					path[i] = current;	
+				}
 			}				
 			break;
-			
+
 		case 1:
+			System.out.println(o.getName());
 			int[] disorderedPath_ = stations_matrix.dijkstra(o);
-			int tIndex_ = stations.indexOf(t);
+			int tIndex_ = stations_matrix.indexOf(t);
 			path = new Station[disorderedPath_.length];
 			path[0] = t;
-			path[path.length-1] = o;
+//			path[path.length-1] = o;
 			for(int i = 1; i < path.length-1; i++) {
-				tIndex_ = disorderedPath_[tIndex_];
-				Station current = stations.get(tIndex_);
-				path[i] = current;
+				if(disorderedPath_[tIndex_] != -1) {
+					tIndex_ = disorderedPath_[tIndex_];
+					Station current = stations.get(tIndex_);
+					path[i] = current;
+				}
 			}				
 			break;
 		}
 		return path;
 	}
-	
+
 	public List getStations_List() {
 		return stations.getVertex();
 	}
-	
+
 	public List getStations_Matrix() {
-		return stations_matrix.vertex;
+		return stations_matrix.getVertex();
 	}
 
 	/**
@@ -108,16 +116,23 @@ public class MainClass {
 	public void setGraphType(int graphType) {
 		this.graphType = graphType;
 	}
-	
-	public void addStation(String[] d) {
-		stations.addVertex(new Station(d[0],d[1],d[2]), getStations_List().size());
-		stations.addVertex(new Station(d[0],d[1],d[2]), getStations_Matrix().size());
+	//	
+	//	public void addStation(String[] d) {
+	//		stations.addVertex(new Station(d[0],d[1],d[2]), getStations_List().size());
+	//		stations.addVertex(new Station(d[0],d[1],d[2]), getStations_Matrix().size());
+	//	}
+
+	public ArrayList<Station> bfs(Station source) {
+		ArrayList<Station> bfs = null;
+		switch(graphType) {
+		case 0:
+			bfs = stations.bfs(source);
+			break;
+
+		case 1:
+			bfs = stations_matrix.bfs(source);
+			break;
+		}
+		return bfs;
 	}
-	
-	public void deleteStation(Station s) {
-		stations.removeNode(s);
-		stations_matrix.removeNode(s);
-	}
-	
-	
 }

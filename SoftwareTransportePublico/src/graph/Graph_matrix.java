@@ -1,8 +1,10 @@
 package graph;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.PriorityQueue;
+import java.util.Queue;
 import java.util.Stack;
 
 /**
@@ -13,12 +15,12 @@ import java.util.Stack;
  */
 public class Graph_matrix<T> {
 
-	public int[][] adjMatrix;
-	public int numberOfVertex;
-	public List<T> vertex;
+	private int[][] adjMatrix;
+	private int numberOfVertex;
+	private List<T> vertex;
 
 	/**
-	 * 
+	 * Constructor of the class
 	 * @param numberOfVertex - amount of vertex in the graph.
 	 */
 	public Graph_matrix(int numberOfVertex) {
@@ -80,7 +82,7 @@ public class Graph_matrix<T> {
 	 * @param key - the object wich index is asked for.
 	 * @return - Integer that specifies the index of the object.
 	 */
-	private Integer indexOf(T key) {
+	public Integer indexOf(T key) {
 		return vertex.indexOf(key);
 	}
 
@@ -150,20 +152,24 @@ public class Graph_matrix<T> {
 		boolean[] vis = new boolean[vertex.size()];
 		int[] prev = new int[vertex.size()];
 
-		dist[indexOf(source)] = 0;
+ 		dist[indexOf(source)] = 0;
 		for(int i = 0; i < dist.length; i++) {
 			if(i != indexOf(source)) {
 				dist[i] = Integer.MAX_VALUE;				
 			}
 		}
+		
+		for(int i = 0; i < prev.length; i++) {
+			prev[i] = -1;
+		}
 
-		PriorityQueue<T> q = new PriorityQueue<T>();
-		q.add(source);
+		PriorityQueue<Pair<T>> q = new PriorityQueue<Pair<T>>();
+		q.add(new Pair<T>(source,0));
 
 
 		while(!q.isEmpty()) {
-			T actual = q.poll();
-			int index = indexOf(actual);
+			Pair<T> actual = q.poll();
+			int index = indexOf(actual.getObject());
 			if(vis[index]) continue;
 
 			vis[index] = true;
@@ -175,13 +181,13 @@ public class Graph_matrix<T> {
 						if(dist[index] + weight < dist[i]) {
 							dist[i] = dist[index] + weight;
 							prev[i] = index;
-							q.add(vertex.get(i));
+							q.add(new Pair(i,weight));
 						}
 					}
 				}
 			}
 		}
-		return dist;
+		return prev;
 	}
 
 	/**
@@ -221,13 +227,16 @@ public class Graph_matrix<T> {
 	/**
 	 * Breadth First Search algorithm from source vertex.
 	 * @param source - Source vertex.
+	 * @return 
 	 */
-	public void bfs(T source) {
-		PriorityQueue<T> q = new PriorityQueue<T>();
+	public ArrayList<T> bfs(T source) {
+		ArrayList<T> b = new ArrayList<T>();
+		Queue<T> q = new LinkedList<T>();
 		boolean[] visited = new boolean[vertex.size()];
 		visited[indexOf(source)] = true;
 
 		q.add(source);
+		b.add(source);
 
 		while(!q.isEmpty()) {
 			T current = q.poll();
@@ -236,12 +245,13 @@ public class Graph_matrix<T> {
 				if(adjMatrix[index][i] != 0) {
 					if(!visited[i]) {
 						q.add(vertex.get(i));
-						System.out.println(i);
+						b.add(vertex.get(index));
 						visited[i] = true;
 					}					
 				}
 			}
 		}
+		return b;
 	}
 
 	/**
@@ -267,6 +277,50 @@ public class Graph_matrix<T> {
 				}
 			}
 		}
+	}
+	
+	
+
+	/**
+	 * @return the adjMatrix
+	 */
+	public int[][] getAdjMatrix() {
+		return adjMatrix;
+	}
+
+	/**
+	 * @param adjMatrix the adjMatrix to set
+	 */
+	public void setAdjMatrix(int[][] adjMatrix) {
+		this.adjMatrix = adjMatrix;
+	}
+
+	/**
+	 * @return the numberOfVertex
+	 */
+	public int getNumberOfVertex() {
+		return numberOfVertex;
+	}
+
+	/**
+	 * @param numberOfVertex the numberOfVertex to set
+	 */
+	public void setNumberOfVertex(int numberOfVertex) {
+		this.numberOfVertex = numberOfVertex;
+	}
+
+	/**
+	 * @return the vertex
+	 */
+	public List<T> getVertex() {
+		return vertex;
+	}
+
+	/**
+	 * @param vertex the vertex to set
+	 */
+	public void setVertex(List<T> vertex) {
+		this.vertex = vertex;
 	}
 
 	public Graph<T> kurskal(T source){

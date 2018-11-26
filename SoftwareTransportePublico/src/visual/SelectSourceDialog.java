@@ -11,57 +11,48 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 
-public class DeleteStationDialog extends JDialog implements ActionListener{
+public class SelectSourceDialog extends JDialog implements ActionListener{
 
-	public static final String ACCEPT = "a";
-
+	public static final String SELECT = "s";
+	
 	private JLabel lbl;
-	private JComboBox st;
-
+	private JComboBox<String> cBox;
 	private JButton accept;
-
+	
 	private MainWindow mw;
-
-	public DeleteStationDialog(List l, MainWindow m) {
+	
+	public SelectSourceDialog(List d, MainWindow m) {
+		
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-		mw = m;
 
 		setLayout(new FlowLayout());
-
-		lbl = new JLabel("Seleccione la estación a eliminar");
-		st = new JComboBox(l.toArray());
-
+		mw = m;
+		lbl = new JLabel("Seleccione el tipo de grafo a usar");
+		cBox = new JComboBox(d.toArray());
 		accept = new JButton("Aceptar");
 		accept.addActionListener(this);
-		accept.setActionCommand(ACCEPT);
-
+		accept.setActionCommand(SELECT);
+		
 		add(lbl);
-		add(st);
+		add(cBox);
 		add(accept);
-
 		pack();
 		center();
+
 	}
 
 	public void center() {
 		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
 		this.setLocation(dim.width/2-this.getSize().width/2, dim.height/2-this.getSize().height/2);
 	}
-
+	
 	@Override
 	public void actionPerformed(ActionEvent a) {
-		if(a.getActionCommand().equals(ACCEPT)) {
-			if(st.getSelectedItem() == null) {
-				JOptionPane.showMessageDialog(this, "Error", "Error", JOptionPane.ERROR_MESSAGE);
-			}
-			else {
-				mw.deleteStation(st.getSelectedItem());
-				setVisible(false);
-				this.dispose();				
-			}
+		if(a.getActionCommand().equals(SELECT)) {
+			mw.initBFSDialog(cBox.getSelectedItem());
+			this.setVisible(false);
+			this.dispose();
 		}
 	}
-
 }
