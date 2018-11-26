@@ -186,7 +186,7 @@ public class Graph<T> {
 			}
 		}
 
-		return prev;
+		return dist;
 	}
 
 	/**
