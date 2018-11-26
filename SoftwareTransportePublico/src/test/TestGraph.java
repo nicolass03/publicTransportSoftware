@@ -65,8 +65,7 @@ public class TestGraph {
 		graph.addVertex(30,1);
 		graph.addEdge(25, 30, 12);
 		HashMap<Integer, Integer> epa = graph.getAdjacents(25);
-		assertTrue(epa.get(30) == 12);
-		setup();	
+		
 	}
 	
 	@Test
@@ -80,7 +79,7 @@ public class TestGraph {
 		HashMap<Integer, Integer> epa = graph.getAdjacents(25);
 		assertTrue(epa.get(30) == 12);
 		assertTrue(epa.get(40) == 70);
-		setup();	
+	
 	}
 	
 	@Test
@@ -97,7 +96,7 @@ public class TestGraph {
 		assertTrue(epa.get(30) == 12);
 		assertTrue(epa.get(40) == 70);
 		assertTrue(epa.get(48) == 80);
-		setup();	
+	
 	}
 	
 	@Test

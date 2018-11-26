@@ -15,7 +15,7 @@ public class TestGraphMatrix {
 private Graph_matrix<Integer> graph;
 	
 	private void setup() {
-		graph = new Graph_matrix<Integer>(6);
+		graph = new Graph_matrix<Integer>(20);
 	}
 	
 
@@ -28,6 +28,34 @@ private Graph_matrix<Integer> graph;
 		assertTrue(graph.get(0) == 25);
 		assertTrue(graph.get(1) == 30);
 		assertTrue(graph.get(2) == 14);
+	}
+	
+	@Test
+	public void testAddVertex2() {
+		setup();
+		graph.addVertex(25);
+		graph.addVertex(30);
+		graph.addVertex(14);
+		graph.addVertex(15);
+		graph.addVertex(11);
+		graph.addVertex(13);
+		graph.addVertex(80);
+		assertTrue(graph.get(0) == 25);
+		assertTrue(graph.get(1) == 30);
+		assertTrue(graph.get(2) == 14);
+		assertTrue(graph.get(3) == 15);
+		assertTrue(graph.get(4) == 11);
+		assertTrue(graph.get(5) == 13);
+		assertTrue(graph.get(6) == 80);
+	}
+	
+	@Test
+	public void testAddVertex3() {
+		setup();
+		for (int i = 0; i < 20; i++) {
+			graph.addVertex((int)(Math.random()*30)+1);
+		}
+		assertTrue(graph.size() == 20);
 	}
 	
 	@Test
@@ -51,6 +79,39 @@ private Graph_matrix<Integer> graph;
 	}
 	
 	@Test
+	public void testAddEdge2() {
+		setup();
+		graph.addVertex(25);
+		graph.addVertex(30);
+		graph.addVertex(40);
+		graph.addEdge(25, 40, 70);
+		graph.addEdge(25, 30, 12);
+		ArrayList<Integer> epa = graph.getAdjacents(25);
+		ArrayList<Integer> a = new ArrayList<>();
+		a.add(30);
+		a.add(40);
+		assertEquals(a,epa);
+	}
+	
+	@Test
+	public void testAddEdge3() {
+		setup();
+		graph.addVertex(25);
+		graph.addVertex(30);
+		graph.addVertex(40);
+		graph.addVertex(48);
+		graph.addEdge(25, 40, 70);
+		graph.addEdge(25, 30, 12);
+		graph.addEdge(25, 48, 80);
+		ArrayList<Integer> epa = graph.getAdjacents(25);
+		ArrayList<Integer> a = new ArrayList<>();
+		a.add(30);
+		a.add(40);
+		a.add(48);
+		assertEquals(a, epa);	
+	}
+	
+	@Test
 	public void testRemoveNode() {
 		setup();
 		graph.addVertex(25);
@@ -59,6 +120,34 @@ private Graph_matrix<Integer> graph;
 		graph.removeNode(25);
 		assertTrue(graph.get(0) == 30);
 		
+	}
+	
+	@Test
+	public void testRemoveNode2() {
+		setup();
+		graph.addVertex(25);
+		graph.addVertex(30);
+		graph.addVertex(14);
+		graph.removeNode(25);
+		graph.removeNode(30);
+		assertTrue(graph.get(0) == 14);
+	}
+	
+	@Test
+	public void testRemoveNode3() {
+		setup();
+		int num = (int) (Math.random()* 40) +1;
+		int num1 = (int) (Math.random()* 40) +1;
+		int num2 = (int) (Math.random()* 40) +1;
+		int num3 = (int) (Math.random()* 40) +1;
+		int num4 = (int) (Math.random()* 40) +1;
+		graph.addVertex(num);
+		graph.addVertex(num1);
+		graph.addVertex(num2);
+		graph.addVertex(num3);
+		graph.addVertex(num4);
+		graph.removeNode(num);
+		assertTrue(graph.get(0) == num1);	
 	}
 
 	@Test 
@@ -79,6 +168,50 @@ private Graph_matrix<Integer> graph;
 		assertTrue(epa.isEmpty());
 		
 	}
+	
+	@Test 
+	public void testRemoveEdge1() {
+		setup();
+		graph.addVertex(25);
+		graph.addVertex(30);
+		graph.addVertex(14);
+		graph.addVertex(15);
+		graph.addEdge(25, 30, 25);
+		graph.addEdge(30, 14, 47);
+		graph.addEdge(14, 25, 25);
+		graph.addEdge(25, 12, 70);
+		graph.addEdge(25, 15, 98);
+		graph.removeEdge(25, 30);
+		graph.removeEdge(25, 12);
+		graph.removeEdge(25, 15);
+		graph.removeEdge(14, 25);
+		ArrayList<Integer> epa = graph.getAdjacents(25);
+		assertTrue(epa.isEmpty());	
+	}
+	
+	@Test 
+	public void testRemoveEdge2() {
+		setup();
+		int num = (int) (Math.random()* 40) +1;
+		int num1 = (int) (Math.random()* 40) +1;
+		int num2 = (int) (Math.random()* 40) +1;
+		int num3 = (int) (Math.random()* 40) +1;
+		int num4 = (int) (Math.random()* 40) +1;
+		graph.addVertex(num);
+		graph.addVertex(num1);
+		graph.addVertex(num2);
+		graph.addVertex(num3);
+		graph.addVertex(num4);
+		graph.addEdge(num2, num1, 25);
+		graph.addEdge(num2, num3, 47);
+		graph.addEdge(num2, num4, 25);
+		graph.removeEdge(num2, num1);
+		graph.removeEdge(num2, num3);
+		graph.removeEdge(num2, num4);
+		ArrayList<Integer> epa = graph.getAdjacents(num2);
+		assertTrue(epa.isEmpty());
+	}
+	
 	
 	@Test
 	public void testDijkstra() {

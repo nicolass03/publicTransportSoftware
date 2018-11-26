@@ -48,7 +48,7 @@ public class Graph_matrix<T> {
 			int index = indexOf(n1);
 			int index2 = indexOf(n2);
 			adjMatrix[index][index2] = w;
-//			adjMatrix[index2][index] = w;
+			adjMatrix[index2][index] = w;
 		}
 	}
 
@@ -181,7 +181,7 @@ public class Graph_matrix<T> {
 				}
 			}
 		}
-		return prev;
+		return dist;
 	}
 
 	/**
