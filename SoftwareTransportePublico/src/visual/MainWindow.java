@@ -52,14 +52,13 @@ public class MainWindow extends JFrame{
 		pSearch.initComboBox(main.getStations_List());
 		
 		JScrollPane sp = new JScrollPane(pResult);
-		sp.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-        sp.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_NEVER);
+		sp.setPreferredSize(new Dimension(240,475));
 		JPanel aux = new JPanel(new FlowLayout());
 		aux.setBackground(Color.WHITE);
 
 		aux.setPreferredSize(new Dimension(250,650));
-		aux.add(pSearch, BorderLayout.WEST);
-		aux.add(sp, BorderLayout.WEST);
+		aux.add(pSearch);
+		aux.add(sp);
 		add(pMap, BorderLayout.CENTER);
 		add(aux, BorderLayout.WEST);
 		add(pOptions, BorderLayout.SOUTH);
